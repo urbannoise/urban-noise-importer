@@ -3,17 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanNoise.Importer.Components.Application", "UrbanNoise.Importer.Components.Application\UrbanNoise.Importer.Components.Application.csproj", "{F46CFDCF-5E15-4F30-9657-E6D15363B77A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanNoise.Importer.Components.Application", "UrbanNoise.Importer.Components.Application\UrbanNoise.Importer.Components.Application.csproj", "{F46CFDCF-5E15-4F30-9657-E6D15363B77A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanNoise.Importer.Components.Domain", "UrbanNoise.Importer.Components.Domain\UrbanNoise.Importer.Components.Domain.csproj", "{25960C1D-84A2-4BF6-ABA7-6628D0059483}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanNoise.Importer.Components.Domain", "UrbanNoise.Importer.Components.Domain\UrbanNoise.Importer.Components.Domain.csproj", "{25960C1D-84A2-4BF6-ABA7-6628D0059483}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanNoise.Importer.Components.Business", "UrbanNoise.Importer.Components.Business\UrbanNoise.Importer.Components.Business.csproj", "{8D9348F4-589B-46F0-A11E-93D24F095E1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanNoise.Importer.Components.Business", "UrbanNoise.Importer.Components.Business\UrbanNoise.Importer.Components.Business.csproj", "{8D9348F4-589B-46F0-A11E-93D24F095E1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanNoise.Importer.Components.Infrastructure", "UrbanNoise.Importer.Components.Infrastructure\UrbanNoise.Importer.Components.Infrastructure.csproj", "{99F088CB-7E42-4355-BEFC-46C61AAF4684}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanNoise.Importer.Components.Infrastructure", "UrbanNoise.Importer.Components.Infrastructure\UrbanNoise.Importer.Components.Infrastructure.csproj", "{99F088CB-7E42-4355-BEFC-46C61AAF4684}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanNoise.Importer.Components.Shared", "UrbanNoise.Importer.Components.Shared\UrbanNoise.Importer.Components.Shared.csproj", "{C769B4EF-C609-41E5-80CA-1882EB198A7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanNoise.Importer.Components.Shared", "UrbanNoise.Importer.Components.Shared\UrbanNoise.Importer.Components.Shared.csproj", "{C769B4EF-C609-41E5-80CA-1882EB198A7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanNoise.Importer.Components.Tests", "UrbanNoise.Importer.Components.Tests\UrbanNoise.Importer.Components.Tests.csproj", "{AC175E67-EF6D-43E2-BF84-4DC1FA1B4AED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanNoise.Importer.Components.Tests", "UrbanNoise.Importer.Components.Tests\UrbanNoise.Importer.Components.Tests.csproj", "{AC175E67-EF6D-43E2-BF84-4DC1FA1B4AED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EF34ED02-14B7-4D56-8DC7-03F4EAA1689B}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		azure-pipelines.yml = azure-pipelines.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

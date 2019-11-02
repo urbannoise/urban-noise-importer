@@ -5,9 +5,9 @@ using Microsoft.Extensions.Logging;
 
 namespace UrbanNoise.Importer.Components.Application
 {
-    public static class Function1
+    public static class Function
     {
-        [FunctionName("Function1")]
+        [FunctionName("Function")]
         public static void Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");

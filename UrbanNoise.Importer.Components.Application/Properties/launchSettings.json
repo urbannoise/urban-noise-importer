@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "UrbanNoise.Importer.Components.Application": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\Pereira\\AppData\\Local\\AzureFunctionsTools\\Releases\\3.0.3\\cli\\func.exe",
+      "commandLineArgs": "start"
+    }
+  }
+}

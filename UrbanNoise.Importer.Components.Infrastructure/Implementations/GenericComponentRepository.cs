@@ -11,9 +11,9 @@ namespace UrbanNoise.Importer.Components.Infrastructure.Implementations
     public class GenericComponentRepository : IGenericComponentRepository
     {
         private readonly IDocumentClient _documentClient;
-        public GenericComponentRepository(IDocumentClient documentClient)
+        public GenericComponentRepository()
         {
-            _documentClient = documentClient;
+
         }
 
 

@@ -19,5 +19,6 @@ namespace UrbanNoise.Importer.Components.Shared.Settings
     public class BcnConnectaApi
     {
         public string BaseUri { get; set; }
+        public string SensorType { get; set; }
     }
 }

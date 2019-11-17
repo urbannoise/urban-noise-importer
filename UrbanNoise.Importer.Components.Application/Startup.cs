@@ -49,7 +49,7 @@ namespace UrbanNoise.Importer.Components.Application
 
             builder.Services.AddLogging();
 
-            builder.Services.AddTransient<IGenericComponentsImportService, GenericComponentsImportService>();
+            builder.Services.AddSingleton<IGenericComponentsImportService, GenericComponentsImportService>();
             builder.Services.AddSingleton<IGenericComponentRepository, GenericComponentRepository>();
         }
     }

@@ -5,7 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.0.0" />
+    <PackageReference Include="RestSharp" Version="106.6.10" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\UrbanNoise.Importer.Components.Domain\UrbanNoise.Importer.Components.Domain.csproj" />
+    <ProjectReference Include="..\UrbanNoise.Importer.Components.Shared\UrbanNoise.Importer.Components.Shared.csproj" />
   </ItemGroup>
 
 </Project>

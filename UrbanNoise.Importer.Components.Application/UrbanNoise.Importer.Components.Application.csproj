@@ -7,7 +7,7 @@
     <PackageReference Include="Microsoft.Azure.DocumentDB" Version="2.9.2" />
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.9.2" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
-    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.30-beta2" />
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.0-preview1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UrbanNoise.Importer.Components.Business\UrbanNoise.Importer.Components.Business.csproj" />

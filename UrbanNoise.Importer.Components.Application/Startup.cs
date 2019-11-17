@@ -43,13 +43,12 @@ namespace UrbanNoise.Importer.Components.Application
                      return new DocumentClient(new Uri(accountEndpoint.ToString()), accountKey.ToString());
 
                  }
-
                  return null;
              });
 
             builder.Services.AddLogging();
 
-            builder.Services.AddSingleton<IGenericComponentsImportService, GenericComponentsImportService>();
+            builder.Services.AddTransient<IGenericComponentsImportService, GenericComponentsImportService>();
             builder.Services.AddSingleton<IGenericComponentRepository, GenericComponentRepository>();
         }
     }

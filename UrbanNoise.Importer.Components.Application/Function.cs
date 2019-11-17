@@ -23,7 +23,6 @@ namespace UrbanNoise.Importer.Components.Application
         {
             await _genericComponentsImportService.SaveNoiseComponents();
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
-
         }
     }
 }

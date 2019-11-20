@@ -24,7 +24,7 @@ steps:
     publishTestResults: true
 
 - script: |
-    bash <(curl -s https://codecov.io/bash)
+    bash <(curl -s https://codecov.io/bash) -v
   displayName: 'Upload to codecov.io'
 
 - task: DotNetCoreCLI@2

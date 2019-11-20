@@ -1,3 +1,6 @@
+pool:
+  vmImage: 'windows-2019'
+
 trigger:
 - master
 - release/*
@@ -15,17 +18,15 @@ steps:
     arguments: '--configuration $(BuildConfiguration)'
 
 
-- task: DotNetCoreCLI@2
-  displayName: Test
-  inputs:
-    command: test
-    projects: '**/*[Tt]ests/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
-    publishTestResults: true
-
+# Build source, tests and run tests with coverage
 - script: |
-    bash <(curl -s https://codecov.io/bash) -v
-  displayName: 'Upload to codecov.io'
+    dotnet test ./UrbanNoise.Importer.Components.Tests/UrbanNoise.Importer.Components.Tests.csproj -c Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  displayName: Run tests with coverage
+
+# Upload coverage to codecov.io
+- script: |
+    %USERPROFILE%\.nuget\packages\codecov\1.9.0\tools\codecov.exe -f "./UrbanNoise.Importer.Components.Tests/coverage.opencover.xml" -t $(CODECOV_TOKEN)
+  displayName: Upload coverage to codecov.io
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish'

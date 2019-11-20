@@ -15,15 +15,17 @@ steps:
     arguments: '--configuration $(BuildConfiguration)'
 
 
-# Build source, tests and run tests with coverage
-- script: |
-    dotnet test ./UrbanNoise.Importer.Components.Tests/UrbanNoise.Importer.Components.Tests.csproj -c Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-  displayName: 'Build source, tests and run tests with coverage'
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: test
+    projects: '**/*[Tt]ests/*.csproj'
+    arguments: '-c Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover'
+    publishTestResults: true
 
-# Upload coverage to codecov.io
 - script: |
-    %USERPROFILE%\.nuget\packages\codecov\1.9.0\tools\codecov.exe -f "./UrbanNoise.Importer.Components.Tests/coverage.opencover.xml" -t $(CODECOV_TOKEN)
-  displayName: Upload coverage to codecov.io
+    bash <(curl -s https://codecov.io/bash)
+  displayName: 'Upload to codecov.io'
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish'

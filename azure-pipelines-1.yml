@@ -1,19 +1,54 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - master
+- release/*
 
-pool:
-  vmImage: 'ubuntu-latest'
+variables:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  BuildConfiguration: Release
+  BuildPlatform: Any CPU
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: DotNetCoreCLI@2
+  displayName: 'Install NBGV tool'
+  condition: ne(variables['system.pullrequest.isfork'], true)
+  inputs:
+    command: custom
+    custom: tool
+    arguments: 'install --tool-path . nbgv'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- script: 'nbgv cloud' 
+  displayName: 'Set Version'
+  condition: ne(variables['system.pullrequest.isfork'], true)
+
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    projects: '**/*.csproj'
+    arguments: '--configuration $(BuildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: test
+    projects: '**/*[Tt]ests/*.csproj'
+    arguments: '--configuration $(BuildConfiguration) --no-build --no-restore'
+    publishTestResults: true
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish'
+  condition: ne(variables['system.pullrequest.isfork'], true)
+  inputs:
+    command: publish
+    publishWebProjects: false
+    arguments: '-o "$(build.artifactstagingdirectory)/Publish" --configuration $(BuildConfiguration) --no-build --no-restore'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  condition: ne(variables['system.pullrequest.isfork'], true)
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)/Publish'
+    ArtifactName: 'Function'
+
+
+
+

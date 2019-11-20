@@ -14,13 +14,11 @@ steps:
     projects: '**/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  displayName: Test
-  inputs:
-    command: test
-    projects: '**/*[Tt]ests/*.csproj'
-    arguments: '-c Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover'
-    publishTestResults: true
+
+# Build source, tests and run tests with coverage
+- script: |
+    dotnet test ./UrbanNoise.Importer.Components.Tests/UrbanNoise.Importer.Components.Tests.csproj -c Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  displayName: 'Build source, tests and run tests with coverage'
 
 # Upload coverage to codecov.io
 - script: |

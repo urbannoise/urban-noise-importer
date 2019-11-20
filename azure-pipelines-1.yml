@@ -1,6 +1,3 @@
-pool:
-  vmImage: 'windows-2019'
-
 trigger:
 - master
 - release/*
@@ -25,8 +22,8 @@ steps:
 
 # Upload coverage to codecov.io
 - script: |
-    %USERPROFILE%\.nuget\packages\codecov\1.9.0\tools\codecov.exe -f "./UrbanNoise.Importer.Components.Tests/coverage.opencover.xml" -t $(CODECOV_TOKEN)
-  displayName: Upload coverage to codecov.io
+    bash <(curl -s https://codecov.io/bash) -v
+  displayName: 'Upload to codecov.io'
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish'

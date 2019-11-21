@@ -23,7 +23,6 @@ steps:
   inputs:
     projects: '**/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
-    workingDirectory:  $(pathtosolution)
 
 # SonarCloud Analysis
 - task: SonarCloudAnalyze@1

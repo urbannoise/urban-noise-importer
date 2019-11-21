@@ -8,13 +8,30 @@ variables:
   BuildPlatform: Any CPU
 
 steps:
+# SonarCloud preparations (madatory)
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud Azure DevOps'
+    organization: 'urbannoise'
+    scannerMode: 'MSBuild'
+    projectKey: 'urbannoise_urban-noise-importer-components'
+    projectName: 'urban-noise-importer-components'
+
 # Build projects to verify everything is compiling
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
     projects: '**/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
+    workingDirectory:  $(pathtosolution)
 
+# SonarCloud Analysis
+- task: SonarCloudAnalyze@1
+
+# Sonarcloud to publish the results
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
 
 # Build source, tests and run tests with coverage
 - script: |
@@ -26,22 +43,6 @@ steps:
     bash <(curl -s https://codecov.io/bash)
   displayName: 'Upload to codecov.io'
 
-# SonarCloud preparations (madatory)
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'SonarCloud Azure DevOps'
-    organization: 'urbannoise'
-    scannerMode: 'MSBuild'
-    projectKey: 'urbannoise_urban-noise-importer-components'
-    projectName: 'urban-noise-importer-components'
-
-# SonarCloud Analysis
-- task: SonarCloudAnalyze@1
-
-# Sonarcloud to publish the results
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
 
 # Publish artifact
 - task: DotNetCoreCLI@2

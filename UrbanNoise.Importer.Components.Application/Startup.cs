@@ -1,10 +1,7 @@
-﻿using Microsoft.Azure.Documents;
-using Microsoft.Azure.Documents.Client;
-using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Data.Common;
 using UrbanNoise.Importer.Components.Business.Implementations;
 using UrbanNoise.Importer.Components.Business.Interfaces;
 using UrbanNoise.Importer.Components.Domain.Repositories;

@@ -34,33 +34,34 @@ namespace UrbanNoise.Importer.Components.Business.Implementations
 
         public async Task<IEnumerable<GenericComponent>> ImportGenericComponents()
         {
-            IEnumerable<GenericComponent> genericNoiseComponents = Enumerable.Empty<GenericComponent>();
-
             try
             {
                 var allGenericComponents = await _mapComponentsClient.GetMapComponentsFromBcnConnectaApi();
 
                 //Calling a method to get only the noise sensors
-                genericNoiseComponents = GetGenericNoiseComponents(allGenericComponents);
+                return GetGenericNoiseComponents(allGenericComponents);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error importing the components from Bcn Conecta API. Exception: {ex.Message}");
             }
-            return genericNoiseComponents;
+            return Enumerable.Empty<GenericComponent>();
         }
 
         public async Task SaveGenericNoiseComponents()
         {
             var noiseComponents = await ImportGenericComponents();
 
-            var componentChanges = await GenericComponentsHaveChanged(noiseComponents);
+            if (noiseComponents.Any())
+            {
+                var componentChanges = await GenericComponentsHaveChanged(noiseComponents);
 
-            if (componentChanges.componentsToInsert.Any())
-                await _genericComponentRepository.SaveGenericComponents(componentChanges.componentsToInsert);
+                if (componentChanges.componentsToInsert.Any())
+                    await _genericComponentRepository.SaveGenericComponents(componentChanges.componentsToInsert);
 
-            if (componentChanges.componentsToDelete.Any())
-                await _genericComponentRepository.DeleteGenericComponents(componentChanges.componentsToDelete);
+                if (componentChanges.componentsToDelete.Any())
+                    await _genericComponentRepository.DeleteGenericComponents(componentChanges.componentsToDelete);
+            }
         }
 
         public async Task<(IEnumerable<GenericComponent> componentsToInsert, IEnumerable<GenericComponent> componentsToDelete)> GenericComponentsHaveChanged(IEnumerable<GenericComponent> genericComponents)

@@ -11,7 +11,5 @@ namespace UrbanNoise.Importer.Components.Domain.Repositories
         Task<IEnumerable<GenericComponent>> GetGenericComponents();
 
         Task SaveGenericComponents(IEnumerable<GenericComponent> genericComponents);
-
-        Task DeleteGenericComponents();
     }
 }

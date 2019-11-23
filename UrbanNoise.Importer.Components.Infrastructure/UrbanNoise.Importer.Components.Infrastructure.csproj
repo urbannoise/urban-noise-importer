@@ -7,10 +7,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.DocumentDB" Version="2.9.2" />
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.9.2" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.0.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.10.0-beta1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\UrbanNoise.Importer.Components.Domain\UrbanNoise.Importer.Components.Domain.csproj" />
+    <ProjectReference Include="..\UrbanNoise.Importer.Components.Shared\UrbanNoise.Importer.Components.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace UrbanNoise.Importer.Components.Shared.Converters
         {
             return mapComponentsDto.Select(i =>
                new GenericComponent(
-                   UUID: Guid.NewGuid(),
+                   ObjectId: ObjectId.GenerateNewId(),
                    IdComponent: i.IdComponent,
                    Coordinates: new Coordinates(i.Coordinates.SingleOrDefault().Latitude, i.Coordinates.SingleOrDefault().Longitude)
                )

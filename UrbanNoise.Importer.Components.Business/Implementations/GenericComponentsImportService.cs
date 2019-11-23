@@ -55,7 +55,11 @@ namespace UrbanNoise.Importer.Components.Business.Implementations
         public async Task SaveNoiseComponents()
         {
             var noiseComponents = await ImportGenericComponents();
-            await _genericComponentRepository.SaveGenericComponents(noiseComponents);
+
+            if (!GenericComponentsHaveChanged(noiseComponents))
+            {
+                await _genericComponentRepository.SaveGenericComponents(noiseComponents);
+            }
         }
 
         public async Task<T> Execute<T>(RestRequest request) where T : new ()

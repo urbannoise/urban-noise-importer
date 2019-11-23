@@ -1,19 +1,64 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - master
+- release/*
 
-pool:
-  vmImage: 'ubuntu-latest'
+variables:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  BuildConfiguration: Release
+  BuildPlatform: Any CPU
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+# SonarCloud preparations (madatory)
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud Azure DevOps'
+    organization: 'urbannoise'
+    scannerMode: 'MSBuild'
+    projectKey: 'urbannoise_urban-noise-importer-components'
+    projectName: 'urban-noise-importer-components'
 
+# Build projects to verify everything is compiling
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    projects: '*.sln'
+    arguments: '--configuration $(BuildConfiguration)'
+
+# SonarCloud Analysis
+- task: SonarCloudAnalyze@1
+
+# Sonarcloud to publish the results
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
+
+# Build source, tests and run tests with coverage
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    dotnet test ./UrbanNoise.Importer.Components.Tests/UrbanNoise.Importer.Components.Tests.csproj -c Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  displayName: Run tests with coverage
+
+# Upload coverage to codecov.io
+- script: |
+    bash <(curl -s https://codecov.io/bash)
+  displayName: 'Upload to codecov.io'
+
+
+# Publish artifact
+- task: DotNetCoreCLI@2
+  displayName: 'Publish'
+  condition: ne(variables['system.pullrequest.isfork'], true)
+  inputs:
+    command: publish
+    publishWebProjects: false
+    arguments: '-o "$(build.artifactstagingdirectory)/Publish" --configuration $(BuildConfiguration) --no-build --no-restore'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  condition: ne(variables['system.pullrequest.isfork'], true)
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)/Publish'
+    ArtifactName: 'Function'
+
+
+
+

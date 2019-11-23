@@ -34,7 +34,7 @@ namespace UrbanNoise.Importer.Components.Business.Implementations
 
         public async Task<IEnumerable<GenericComponent>> ImportGenericComponents()
         {
-            IEnumerable<GenericComponent> genericNoiseComponents = new List<GenericComponent>();
+            IEnumerable<GenericComponent> genericNoiseComponents = Enumerable.Empty<GenericComponent>();
 
             try
             {

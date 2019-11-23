@@ -12,16 +12,14 @@ namespace UrbanNoise.Importer.Components.Infrastructure.Implementations
 {
     public class GenericComponentRepository : IGenericComponentRepository
     {
-        private IMongoClient _client;
-        private IMongoDatabase _database;
-        private readonly AppSettings _appSettings;
         private readonly IMongoCollection<GenericComponent> _genericComponentsCollection;
 
         public GenericComponentRepository(IOptions<AppSettings> options)
         {
-            _appSettings = options.Value;
-            _client = new MongoClient(_appSettings.CosmosDb.ConnectionString);
-            _database = _client.GetDatabase(_appSettings.CosmosDb.Database);
+            AppSettings _appSettings = options.Value;
+            IMongoClient _client = new MongoClient(_appSettings.CosmosDb.ConnectionString);
+            IMongoDatabase _database = _client.GetDatabase(_appSettings.CosmosDb.Database);
+            
             _genericComponentsCollection = _database.GetCollection<GenericComponent>(_appSettings.CosmosDb.Collection);
         }
 

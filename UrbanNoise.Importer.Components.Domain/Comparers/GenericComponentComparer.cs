@@ -6,17 +6,17 @@ namespace UrbanNoise.Importer.Components.Domain.Comparers
 {
     public class GenericComponentComparer : IEqualityComparer<GenericComponent>
     {
-        public bool Equals(GenericComponent genericComponentFirst, GenericComponent genericComponentSecond)
+        public bool Equals(GenericComponent x, GenericComponent y)
         {
             //Check whether the objects are the same object. 
-            if (Object.ReferenceEquals(genericComponentFirst, genericComponentSecond)) return true;
+            if (Object.ReferenceEquals(x, y)) return true;
 
             //Check whether any of the compared objects is null.
-            if (Object.ReferenceEquals(genericComponentFirst, null) || Object.ReferenceEquals(genericComponentSecond, null))
+            if (Object.ReferenceEquals(x, null) || Object.ReferenceEquals(y, null))
                 return false;
 
             //Check the id is already stored in the database (coordinates are changing constantly so it is better to avoid it for now)
-            return genericComponentFirst.IdComponent == genericComponentSecond.IdComponent;
+            return x.IdComponent == y.IdComponent;
         }
 
         public int GetHashCode(GenericComponent obj)

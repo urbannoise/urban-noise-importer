@@ -5,7 +5,7 @@ namespace UrbanNoise.Importer.Components.Infrastructure.Clients
 {
     public class BaseClient : RestClient
     {
-        private bool IsTimeoutResponse(IRestRequest request, IRestResponse response)
+        private bool IsTimeoutResponse(IRestResponse response)
         {
             if (response.StatusCode == 0)
             {
@@ -17,7 +17,7 @@ namespace UrbanNoise.Importer.Components.Infrastructure.Clients
         public override async Task<IRestResponse<T>> ExecuteTaskAsync<T>(IRestRequest request)
         {
             var response = await base.ExecuteTaskAsync<T>(request);
-            if (IsTimeoutResponse(request, response))
+            if (IsTimeoutResponse(response))
             {
                 return null;
             }

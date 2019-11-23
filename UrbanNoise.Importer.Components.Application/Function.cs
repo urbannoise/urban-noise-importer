@@ -21,7 +21,7 @@ namespace UrbanNoise.Importer.Components.Application
         [FunctionName("Function")]
         public async Task Run([TimerTrigger("* * * * *")]TimerInfo myTimer, ILogger log) //("0 * * * *")
         {
-            await _genericComponentsImportService.SaveNoiseComponents();
+            await _genericComponentsImportService.SaveGenericNoiseComponents();
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
         }
     }

@@ -11,6 +11,7 @@ using System.Text;
 using UrbanNoise.Importer.Components.Business.Implementations;
 using UrbanNoise.Importer.Components.Business.Interfaces;
 using UrbanNoise.Importer.Components.Domain.Repositories;
+using UrbanNoise.Importer.Components.Infrastructure.Clients;
 using UrbanNoise.Importer.Components.Infrastructure.Implementations;
 using UrbanNoise.Importer.Components.Shared.Settings;
 
@@ -50,6 +51,7 @@ namespace UrbanNoise.Importer.Components.Application
 
             builder.Services.AddTransient<IGenericComponentsImportService, GenericComponentsImportService>();
             builder.Services.AddSingleton<IGenericComponentRepository, GenericComponentRepository>();
+            builder.Services.AddSingleton<IMapComponentsClient, MapComponentsClient>();
         }
     }
 }

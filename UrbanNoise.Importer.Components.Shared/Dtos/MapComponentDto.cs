@@ -1,26 +1,21 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using RestSharp.Deserializers;
 
 namespace UrbanNoise.Importer.Components.Shared.Dtos
 {
-    [JsonObject(MemberSerialization.OptIn)]
+    [JsonObject(MemberSerialization.OptOut)]
     public class MapComponentDto
     {
-        [JsonProperty(PropertyName = "icon")]
-        public String Icon { get; set; }
+        [DeserializeAs(Name = "icon")]
+        public string Icon { get; set; }
 
-        [JsonProperty(PropertyName = "id")]
-        public String IdComponent { get; set; }
+        [DeserializeAs(Name = "id")]
+        public string IdComponent { get; set; }
 
-        [JsonProperty(PropertyName = "type")]
-        public String ComponentType { get; set; }
+        [DeserializeAs(Name = "type")]
+        public string ComponentType { get; set; }
 
-        [JsonProperty(PropertyName = "coordinates")]
-        public IList<CoordinateDto> Coordinates { get; set; }
-
-        [JsonProperty(PropertyName = "centroid")]
-        public CoordinateDto CentroId { get; set; }
+        [DeserializeAs(Name = "centroid")]
+        public CoordinateDto Coordinates { get; set; }
     }
 }

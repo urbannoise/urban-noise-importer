@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace UrbanNoise.Importer.Components.Shared.Settings
+﻿namespace UrbanNoise.Importer.Components.Shared.Settings
 {
     public class AppSettings
     {

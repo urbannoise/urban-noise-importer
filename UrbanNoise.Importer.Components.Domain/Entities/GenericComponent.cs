@@ -7,19 +7,32 @@ using UrbanNoise.Importer.Components.Domain.ValueObjects;
 
 namespace UrbanNoise.Importer.Components.Domain.Entities
 {
-    public class GenericComponent
+    [BsonIgnoreExtraElements]
+    public class GenericComponent : IEquatable<GenericComponent>
     {
         public GenericComponent(ObjectId ObjectId, String IdComponent, Coordinates Coordinates)
         {
-            this.ObjectId = ObjectId;
+            this.Id = ObjectId;
             this.IdComponent = IdComponent;
             this.Coordinates = Coordinates;
         }
-        public string Id { get; set; }
         
         [BsonId]
-        public ObjectId ObjectId { get; set; }
+        public ObjectId Id { get; set; }
         public String IdComponent { get; set; }
         public Coordinates Coordinates { get; set; }
+
+        public override bool Equals(object obj) => Equals(obj as GenericComponent);
+
+        public bool Equals(GenericComponent genericComponentSecond)
+        {
+            //Check whether the objects are the same object. 
+            if (Object.ReferenceEquals(this, genericComponentSecond)) return true;
+
+            //Check the properties
+            return this.IdComponent == genericComponentSecond.IdComponent
+                && this.Coordinates.Latitude == genericComponentSecond.Coordinates.Latitude
+                && this.Coordinates.Longitude == genericComponentSecond.Coordinates.Longitude;
+        }
     }
 }

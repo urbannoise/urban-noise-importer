@@ -1,8 +1,6 @@
 ﻿using MongoDB.Bson;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UrbanNoise.Importer.Components.Domain.Entities;
 using UrbanNoise.Importer.Components.Domain.ValueObjects;
 using UrbanNoise.Importer.Components.Shared.Dtos;
@@ -17,7 +15,7 @@ namespace UrbanNoise.Importer.Components.Shared.Converters
                new GenericComponent(
                    ObjectId: ObjectId.GenerateNewId(),
                    IdComponent: i.IdComponent,
-                   Coordinates: new Coordinates(i.Coordinates.SingleOrDefault().Latitude, i.Coordinates.SingleOrDefault().Longitude)
+                   Coordinates: new Coordinates(i.Coordinates.Latitude, i.Coordinates.Longitude)
                )
            ).AsEnumerable();
         }

@@ -10,8 +10,8 @@ namespace UrbanNoise.Importer.Components.Business.Interfaces
     public interface IGenericComponentsImportService
     {
         Task<IEnumerable<GenericComponent>> ImportGenericComponents();
-        Boolean GenericComponentsHaveChanged(IEnumerable<GenericComponent> genericComponents);
-        IEnumerable<GenericComponent> GetNoiseSensors(MapComponentsDto mapComponentsDto);
-        Task SaveNoiseComponents();
+        Task<Boolean> GenericComponentsHaveChanged(IEnumerable<GenericComponent> genericComponents);
+        IEnumerable<GenericComponent> GetGenericNoiseComponents(MapComponentsDto mapComponentsDto);
+        Task SaveGenericNoiseComponents();
     }
 }

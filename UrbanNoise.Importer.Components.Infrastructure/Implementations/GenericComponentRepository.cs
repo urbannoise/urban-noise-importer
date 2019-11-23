@@ -1,10 +1,8 @@
-﻿using Microsoft.Azure.Documents;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using UrbanNoise.Importer.Components.Domain.Entities;
 using UrbanNoise.Importer.Components.Domain.Repositories;
@@ -35,6 +33,16 @@ namespace UrbanNoise.Importer.Components.Infrastructure.Implementations
         public async Task SaveGenericComponents(IEnumerable<GenericComponent> genericComponents)
         {
             await _genericComponentsCollection.InsertManyAsync(genericComponents);
+        }
+
+        public async Task DeleteGenericComponents(IEnumerable<GenericComponent> genericComponents)
+        {         
+            await _genericComponentsCollection.DeleteManyAsync(ItemWithListOfId(genericComponents.Select(i => i.Id).ToList()));
+        }
+
+        protected FilterDefinition<GenericComponent> ItemWithListOfId(List<ObjectId> id)
+        {
+            return Builders<GenericComponent>.Filter.In("_id", id);
         }
     }
 }

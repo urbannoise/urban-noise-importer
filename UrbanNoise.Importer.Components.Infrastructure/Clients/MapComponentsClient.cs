@@ -1,8 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using UrbanNoise.Importer.Components.Shared.Dtos;
 using UrbanNoise.Importer.Components.Shared.Settings;

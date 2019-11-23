@@ -1,11 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using UrbanNoise.Importer.Components.Business.Interfaces;
-using UrbanNoise.Importer.Components.Shared.Settings;
 
 namespace UrbanNoise.Importer.Components.Application
 {

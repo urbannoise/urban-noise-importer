@@ -1,13 +1,9 @@
 ﻿using RestSharp;
-using RestSharp.Deserializers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace UrbanNoise.Importer.Components.Infrastructure.Clients
 {
-    public class BaseClient : RestSharp.RestClient
+    public class BaseClient : RestClient
     {
         private bool IsTimeoutResponse(IRestRequest request, IRestResponse response)
         {
@@ -18,7 +14,6 @@ namespace UrbanNoise.Importer.Components.Infrastructure.Clients
             return false;
         }
 
-
         public override async Task<IRestResponse<T>> ExecuteTaskAsync<T>(IRestRequest request)
         {
             var response = await base.ExecuteTaskAsync<T>(request);
@@ -28,7 +23,6 @@ namespace UrbanNoise.Importer.Components.Infrastructure.Clients
             }
             return response;
         }
-
 
         public async Task<T> GetAsync<T>(IRestRequest request) where T : new()
         {

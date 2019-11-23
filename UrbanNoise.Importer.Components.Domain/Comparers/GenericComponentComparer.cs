@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using UrbanNoise.Importer.Components.Domain.Entities;
 
 namespace UrbanNoise.Importer.Components.Domain.Comparers
@@ -16,55 +15,20 @@ namespace UrbanNoise.Importer.Components.Domain.Comparers
             if (Object.ReferenceEquals(genericComponentFirst, null) || Object.ReferenceEquals(genericComponentSecond, null))
                 return false;
 
-            //Check the properties
-            var propertiesAreTheSame = genericComponentFirst.IdComponent == genericComponentSecond.IdComponent
-                && genericComponentFirst.Coordinates.Latitude == genericComponentSecond.Coordinates.Latitude
-                && genericComponentFirst.Coordinates.Longitude == genericComponentSecond.Coordinates.Longitude;
-
-            if (propertiesAreTheSame)
-                return true;
-            else
-                return false;
-        }
-
-        public bool Equals(GenericComponent other)
-        {
-            throw new NotImplementedException();
+            //Check the id is already stored in the database (coordinates are changing constantly so it is better to avoid it for now)
+            return genericComponentFirst.IdComponent == genericComponentSecond.IdComponent;
         }
 
         public int GetHashCode(GenericComponent obj)
         {
-            throw new NotImplementedException();
-        }
-    }
+            //Check whether the object is null
+            if (obj is null) return 0;
 
+            //Get hash code for the Name field if it is not null.
+            int hashId = obj.IdComponent == null ? 0 : obj.IdComponent.GetHashCode();
 
-    public class GenericComponentsComparer : IEqualityComparer<IEnumerable<GenericComponent>>
-    {
-        public bool Equals(GenericComponent genericComponentFirst, GenericComponent genericComponentSecond)
-        {
-            //Check whether the objects are the same object. 
-            if (Object.ReferenceEquals(genericComponentFirst, genericComponentSecond)) return true;
-
-            //Check the properties
-            return genericComponentFirst.IdComponent == genericComponentSecond.IdComponent
-                && genericComponentFirst.Coordinates.Latitude == genericComponentSecond.Coordinates.Latitude
-                && genericComponentFirst.Coordinates.Longitude == genericComponentSecond.Coordinates.Longitude;
-        }
-
-        public bool Equals(IEnumerable<GenericComponent> x, IEnumerable<GenericComponent> y)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetHashCode(GenericComponent obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetHashCode(IEnumerable<GenericComponent> obj)
-        {
-            throw new NotImplementedException();
+            //Calculate the hash code for the product.
+            return hashId;
         }
     }
 }

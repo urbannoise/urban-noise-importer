@@ -1,11 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using RestSharp;
-using RestSharp.Serializers.Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using UrbanNoise.Importer.Components.Business.Interfaces;
 using UrbanNoise.Importer.Components.Domain.Comparers;
@@ -41,8 +38,6 @@ namespace UrbanNoise.Importer.Components.Business.Implementations
 
             try
             {
-                //ar request = new RestSharp.RestRequest();
-
                 var allGenericComponents = await _mapComponentsClient.GetMapComponentsFromBcnConnectaApi();
 
                 //Calling a method to get only the noise sensors
@@ -59,20 +54,24 @@ namespace UrbanNoise.Importer.Components.Business.Implementations
         {
             var noiseComponents = await ImportGenericComponents();
 
-            if (await GenericComponentsHaveChanged(noiseComponents))
-            {
-                await _genericComponentRepository.SaveGenericComponents(noiseComponents);
-            }
+            var componentChanges = await GenericComponentsHaveChanged(noiseComponents);
+
+            if (componentChanges.componentsToInsert.Any())
+                await _genericComponentRepository.SaveGenericComponents(componentChanges.componentsToInsert);
+
+            if (componentChanges.componentsToDelete.Any())
+                await _genericComponentRepository.DeleteGenericComponents(componentChanges.componentsToDelete);
         }
 
-        public async Task<Boolean> GenericComponentsHaveChanged(IEnumerable<GenericComponent> genericComponents)
+        public async Task<(IEnumerable<GenericComponent> componentsToInsert, IEnumerable<GenericComponent> componentsToDelete)> GenericComponentsHaveChanged(IEnumerable<GenericComponent> genericComponents)
         {
-            //We need to verify if there is any change on the list of Noise Sensors
-            var newComponents = false;
+            //We need to verify if there is any change on the list of Noise Sensors to save or to delete
+            var currentNoiseComponents = await _genericComponentRepository.GetGenericComponents();
 
-            newComponents = !genericComponents.SequenceEqual(await _genericComponentRepository.GetGenericComponents(), new GenericComponentComparer());
+            var noiseComponentsToInsert = genericComponents.Except(currentNoiseComponents, new GenericComponentComparer()).ToList();             
+            var noiseComponentsToDelete = currentNoiseComponents.Except(genericComponents, new GenericComponentComparer()).ToList();
 
-            return newComponents;
+            return (noiseComponentsToInsert, noiseComponentsToDelete);
         }
 
         public IEnumerable<GenericComponent> GetGenericNoiseComponents(MapComponentsDto mapComponentsDto)

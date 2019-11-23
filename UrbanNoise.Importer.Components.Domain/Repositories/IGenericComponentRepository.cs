@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using UrbanNoise.Importer.Components.Domain.Entities;
 
@@ -11,5 +9,7 @@ namespace UrbanNoise.Importer.Components.Domain.Repositories
         Task<IEnumerable<GenericComponent>> GetGenericComponents();
 
         Task SaveGenericComponents(IEnumerable<GenericComponent> genericComponents);
+
+        Task DeleteGenericComponents(IEnumerable<GenericComponent> genericComponents);
     }
 }

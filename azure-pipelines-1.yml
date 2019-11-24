@@ -2,6 +2,9 @@ trigger:
 - master
 - release/*
 
+pool:
+  vmImage: "windows-2019"
+
 variables:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   BuildConfiguration: Release
@@ -16,6 +19,9 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'urbannoise_urban-noise-importer-components'
     projectName: 'urban-noise-importer-components'
+    extraProperties: |
+        sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
+        sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
 
 # Build projects to verify everything is compiling
 - task: DotNetCoreCLI@2
@@ -36,6 +42,7 @@ steps:
 - task: SonarCloudPublish@1
   inputs:
     pollingTimeoutSec: '300'
+
 
 
 # Upload coverage to codecov.io

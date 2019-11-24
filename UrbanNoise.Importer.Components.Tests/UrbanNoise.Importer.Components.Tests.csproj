@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <PackageReference Include="OpenCover" Version="4.7.922" />
@@ -16,6 +17,17 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Integration\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UrbanNoise.Importer.Components.Business\UrbanNoise.Importer.Components.Business.csproj" />
+    <ProjectReference Include="..\UrbanNoise.Importer.Components.Domain\UrbanNoise.Importer.Components.Domain.csproj" />
+    <ProjectReference Include="..\UrbanNoise.Importer.Components.Infrastructure\UrbanNoise.Importer.Components.Infrastructure.csproj" />
+    <ProjectReference Include="..\UrbanNoise.Importer.Components.Shared\UrbanNoise.Importer.Components.Shared.csproj" />
   </ItemGroup>
 
 </Project>

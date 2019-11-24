@@ -22,7 +22,8 @@ namespace UrbanNoise.Importer.Components.Business.Implementations
         private readonly IMapComponentsClient _mapComponentsClient;
         private readonly ILogger _logger;
 
-        public GenericComponentsImportService(IGenericComponentRepository genericComponentRepository, IOptions<AppSettings> options, ILogger logger, IMapComponentsClient mapComponentsClient)
+        public GenericComponentsImportService(IGenericComponentRepository genericComponentRepository, IOptions<AppSettings> options, 
+            ILogger logger, IMapComponentsClient mapComponentsClient)
         {
             _appSettings = options.Value;
             _logger = logger;

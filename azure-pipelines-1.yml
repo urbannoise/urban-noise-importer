@@ -2,9 +2,6 @@ trigger:
 - master
 - release/*
 
-pool:
-  vmImage: "windows-2019"
-
 variables:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   BuildConfiguration: Release
@@ -42,13 +39,6 @@ steps:
 - task: SonarCloudPublish@1
   inputs:
     pollingTimeoutSec: '300'
-
-
-
-# Upload coverage to codecov.io
-- script: |
-    bash <(curl -s https://codecov.io/bash)
-  displayName: 'Upload to codecov.io'
 
 
 # Publish artifact

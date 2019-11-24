@@ -8,8 +8,8 @@ namespace UrbanNoise.Importer.Components.Domain.Repositories
     {
         Task<IEnumerable<GenericComponent>> GetGenericComponents();
 
-        Task SaveGenericComponents(IEnumerable<GenericComponent> genericComponents);
+        Task<IEnumerable<GenericComponent>> SaveGenericComponents(IEnumerable<GenericComponent> genericComponents);
 
-        Task DeleteGenericComponents(IEnumerable<GenericComponent> genericComponents);
+        Task<long> DeleteGenericComponents(IEnumerable<GenericComponent> genericComponents);
     }
 }

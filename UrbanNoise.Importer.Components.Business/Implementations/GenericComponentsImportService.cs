@@ -49,8 +49,10 @@ namespace UrbanNoise.Importer.Components.Business.Implementations
             return Enumerable.Empty<GenericComponent>();
         }
 
-        public async Task SaveGenericNoiseComponents()
+        public async Task<(bool newComponentsInserted, bool unusedComponentsDeleted)> SaveGenericNoiseComponents()
         {
+            var newComponentsInserted = false;
+            var unusedComponentsDeleted = false;
             var noiseComponents = await ImportGenericComponents();
 
             if (noiseComponents.Any())
@@ -58,11 +60,19 @@ namespace UrbanNoise.Importer.Components.Business.Implementations
                 var componentChanges = await GenericComponentsHaveChanged(noiseComponents);
 
                 if (componentChanges.componentsToInsert.Any())
-                    await _genericComponentRepository.SaveGenericComponents(componentChanges.componentsToInsert);
+                {
+                    var inserted = await _genericComponentRepository.SaveGenericComponents(componentChanges.componentsToInsert);
+                    newComponentsInserted = inserted != null;
+                }
 
                 if (componentChanges.componentsToDelete.Any())
-                    await _genericComponentRepository.DeleteGenericComponents(componentChanges.componentsToDelete);
+                {
+                    var deleted = await _genericComponentRepository.DeleteGenericComponents(componentChanges.componentsToDelete);
+                    unusedComponentsDeleted = deleted > 0;
+                }
             }
+
+            return (newComponentsInserted, unusedComponentsDeleted);
         }
 
         public async Task<(IEnumerable<GenericComponent> componentsToInsert, IEnumerable<GenericComponent> componentsToDelete)> GenericComponentsHaveChanged(IEnumerable<GenericComponent> genericComponents)

@@ -28,14 +28,16 @@ namespace UrbanNoise.Importer.Components.Infrastructure.Implementations
             return await _genericComponentsCollection.Find<GenericComponent>(new BsonDocument()).ToListAsync();
         }
 
-        public async Task SaveGenericComponents(IEnumerable<GenericComponent> genericComponents)
+        public async Task<IEnumerable<GenericComponent>> SaveGenericComponents(IEnumerable<GenericComponent> genericComponents)
         {
             await _genericComponentsCollection.InsertManyAsync(genericComponents);
+            return genericComponents;
         }
 
-        public async Task DeleteGenericComponents(IEnumerable<GenericComponent> genericComponents)
+        public async Task<long> DeleteGenericComponents(IEnumerable<GenericComponent> genericComponents)
         {         
-            await _genericComponentsCollection.DeleteManyAsync(ItemWithListOfId(genericComponents.Select(i => i.Id).ToList()));
+            var result = await _genericComponentsCollection.DeleteManyAsync(ItemWithListOfId(genericComponents.Select(i => i.Id).ToList()));
+            return result.DeletedCount;
         }
 
         protected FilterDefinition<GenericComponent> ItemWithListOfId(List<ObjectId> id)

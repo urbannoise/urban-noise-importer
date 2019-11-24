@@ -10,6 +10,6 @@ namespace UrbanNoise.Importer.Components.Business.Interfaces
         Task<IEnumerable<GenericComponent>> ImportGenericComponents();
         Task<(IEnumerable<GenericComponent> componentsToInsert, IEnumerable<GenericComponent> componentsToDelete)> GenericComponentsHaveChanged(IEnumerable<GenericComponent> genericComponents);
         IEnumerable<GenericComponent> GetGenericNoiseComponents(MapComponentsDto mapComponentsDto);
-        Task SaveGenericNoiseComponents();
+        Task<(bool newComponentsInserted, bool unusedComponentsDeleted)> SaveGenericNoiseComponents();
     }
 }

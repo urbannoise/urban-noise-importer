@@ -7,7 +7,11 @@ namespace UrbanNoise.Importer.Components.Domain.Entities
 {
     public class GenericComponent
     {
-        public GenericComponent(ObjectId ObjectId, String IdComponent, Coordinates Coordinates)
+        public GenericComponent()
+        {
+
+        }
+        public GenericComponent(ObjectId ObjectId, string IdComponent, Coordinates Coordinates)
         {
             this.Id = ObjectId;
             this.IdComponent = IdComponent;
@@ -16,7 +20,7 @@ namespace UrbanNoise.Importer.Components.Domain.Entities
         
         [BsonId]
         public ObjectId Id { get; set; }
-        public String IdComponent { get; set; }
+        public string IdComponent { get; set; }
         public Coordinates Coordinates { get; set; }
     }
 }

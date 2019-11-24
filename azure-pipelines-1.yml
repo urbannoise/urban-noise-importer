@@ -24,14 +24,10 @@ steps:
     projects: '*.sln'
     arguments: '--configuration $(BuildConfiguration)'
 
-- task: VSTest@2
-  inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\*test*.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
+# Build source, tests and run tests with coverage
+- script: |
+    dotnet test ./UrbanNoise.Importer.Components.Tests/UrbanNoise.Importer.Components.Tests.csproj -c Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  displayName: Run tests with coverage
 
 # SonarCloud Analysis
 - task: SonarCloudAnalyze@1
@@ -41,10 +37,6 @@ steps:
   inputs:
     pollingTimeoutSec: '300'
 
-# Build source, tests and run tests with coverage
-- script: |
-    dotnet test ./UrbanNoise.Importer.Components.Tests/UrbanNoise.Importer.Components.Tests.csproj -c Debug --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-  displayName: Run tests with coverage
 
 # Upload coverage to codecov.io
 - script: |

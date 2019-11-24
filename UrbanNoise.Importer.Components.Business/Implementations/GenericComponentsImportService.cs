@@ -62,13 +62,13 @@ namespace UrbanNoise.Importer.Components.Business.Implementations
                 if (componentChanges.componentsToInsert.Any())
                 {
                     var inserted = await _genericComponentRepository.SaveGenericComponents(componentChanges.componentsToInsert);
-                    newComponentsInserted = inserted != null;
+                    newComponentsInserted = true;
                 }
 
                 if (componentChanges.componentsToDelete.Any())
                 {
                     var deleted = await _genericComponentRepository.DeleteGenericComponents(componentChanges.componentsToDelete);
-                    unusedComponentsDeleted = deleted > 0;
+                    unusedComponentsDeleted = true;
                 }
             }
 

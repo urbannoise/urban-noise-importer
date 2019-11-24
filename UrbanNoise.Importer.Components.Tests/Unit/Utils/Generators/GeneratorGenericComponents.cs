@@ -15,7 +15,7 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Utils.Generators
                 new GenericComponent
                 {
                     Id = ObjectId.GenerateNewId(),
-                    IdComponent = "id-component-1",
+                    IdComponent = "1",
                     Coordinates = new Coordinates
                     {
                         Longitude = "4.1222",
@@ -25,7 +25,7 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Utils.Generators
                 new GenericComponent
                 {
                     Id = ObjectId.GenerateNewId(),
-                    IdComponent = "id-component-2",
+                    IdComponent = "2",
                     Coordinates = new Coordinates
                     {
                         Longitude = "8.1222",
@@ -46,7 +46,7 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Utils.Generators
             return new GenericComponent
             {
                 Id = ObjectId.GenerateNewId(),
-                IdComponent = "id-component-3",
+                IdComponent = "3",
                 Coordinates = new Coordinates
                 {
                     Longitude = "4.1222",

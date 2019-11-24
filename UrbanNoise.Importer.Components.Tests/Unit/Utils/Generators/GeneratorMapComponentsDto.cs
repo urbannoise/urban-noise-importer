@@ -18,7 +18,7 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Utils.Generators
                     {
                         Icon = "noise",
                         ComponentType = "noise",
-                        IdComponent = "noise",
+                        IdComponent = "1",
                         Coordinates = new CoordinateDto
                         {
                             Latitude = "4.2113",
@@ -29,7 +29,7 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Utils.Generators
                     {
                         Icon = "water",
                         ComponentType = "water",
-                        IdComponent = "water",
+                        IdComponent = "2",
                         Coordinates = new CoordinateDto
                         {
                             Latitude = "4.2113",
@@ -50,7 +50,7 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Utils.Generators
                     {
                         Icon = "water",
                         ComponentType = "water",
-                        IdComponent = "water",
+                        IdComponent = "3",
                         Coordinates = new CoordinateDto
                         {
                             Latitude = "4.2113",
@@ -69,6 +69,21 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Utils.Generators
         public static Task<MapComponentsDto> GenerateWrongMapComponentsDtoAsync()
         {
             return Task.FromResult(GenerateWrongMapComponentsDto());
+        }
+
+        public static MapComponentDto GenerateMapComponentDto()
+        {
+            return new MapComponentDto
+            {
+                Icon = "noise",
+                ComponentType = "noise",
+                IdComponent = "3",
+                Coordinates = new CoordinateDto
+                {
+                    Latitude = "4.2113",
+                    Longitude = "0.1233"
+                }                              
+            };
         }
     }
 }

@@ -91,7 +91,7 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Services
             var result = genericComponentService.GetGenericNoiseComponents(mapComponentsDto);
 
             Assert.NotNull(result);
-            Assert.Collection(result, item => Assert.Contains("noise", item.IdComponent));
+            Assert.Collection(result, item => Assert.Contains("1", item.IdComponent));
         }
 
         public static IEnumerable<object[]> MapComponentsDtoParameter =>
@@ -164,7 +164,7 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Services
             var genericComponentRepositoryMocked = new Mock<IGenericComponentRepository>();
 
             genericComponentRepositoryMocked.Setup(x => x.GetGenericComponents())
-                .ReturnsAsync(GeneratorGenericComponents.GenerateGenericComponentsAsync().Result.Append<GenericComponent>(GeneratorGenericComponents.GenerateGenerateComponent()));
+                .ReturnsAsync(GeneratorGenericComponents.GenerateGenericComponentsAsync().Result.Append(GeneratorGenericComponents.GenerateGenerateComponent()));
 
             var genericComponentService = new GenericComponentsImportService(genericComponentRepositoryMocked.Object, _optionsMocked, _loggerMocked, _mapComponentsClientMocked);
 
@@ -180,5 +180,56 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Services
                 new object[] { GeneratorGenericComponents.GenerateGenericComponents() }
             };
 
+        [Fact]
+        [Trait("Category", "SaveGenericNoiseComponents")]
+        public async Task SaveGenericNoiseComponents_ShouldInsertNewComponents()
+        {
+            var mapComponentsDto = GeneratorMapComponentsDto.GenerateMapComponentsDtoAsync().Result;
+            mapComponentsDto.Components.Add(GeneratorMapComponentsDto.GenerateMapComponentDto());
+            
+            var mapComponentsClientMocked = new Mock<IMapComponentsClient>();
+            mapComponentsClientMocked.Setup(x => x.GetMapComponentsFromBcnConnectaApi())
+                .ReturnsAsync(mapComponentsDto);
+
+            var optionsMocked = new Mock<IOptions<AppSettings>>();
+            optionsMocked.Setup(i => i.Value).Returns(new AppSettings { BcnConnectaApi = new BcnConnectaApi { SensorType = "noise" } });
+
+            var genericComponentRepositoryMocked = new Mock<IGenericComponentRepository>();
+            genericComponentRepositoryMocked.Setup(x => x.GetGenericComponents())
+                .ReturnsAsync(new List<GenericComponent> { GeneratorGenericComponents.GenerateGenericComponentsAsync().Result.FirstOrDefault() });
+
+            var genericComponentService = new GenericComponentsImportService(genericComponentRepositoryMocked.Object, optionsMocked.Object, _loggerMocked, mapComponentsClientMocked.Object);
+
+            var result = await genericComponentService.SaveGenericNoiseComponents();
+
+            Assert.True(result.newComponentsInserted);
+            Assert.False(result.unusedComponentsDeleted);
+        }
+
+        [Fact]
+        [Trait("Category", "SaveGenericNoiseComponents")]
+        public async Task SaveGenericNoiseComponents_ShouldDeleteUnusedComponents()
+        {
+            var mapComponentsDto = GeneratorMapComponentsDto.GenerateMapComponentsDtoAsync().Result;
+            mapComponentsDto.Components.RemoveAt(1);
+
+            var mapComponentsClientMocked = new Mock<IMapComponentsClient>();
+            mapComponentsClientMocked.Setup(x => x.GetMapComponentsFromBcnConnectaApi())
+                .ReturnsAsync(mapComponentsDto);
+
+            var optionsMocked = new Mock<IOptions<AppSettings>>();
+            optionsMocked.Setup(i => i.Value).Returns(new AppSettings { BcnConnectaApi = new BcnConnectaApi { SensorType = "noise" } });
+
+            var genericComponentRepositoryMocked = new Mock<IGenericComponentRepository>();
+            genericComponentRepositoryMocked.Setup(x => x.GetGenericComponents())
+                .ReturnsAsync(await GeneratorGenericComponents.GenerateGenericComponentsAsync());
+
+            var genericComponentService = new GenericComponentsImportService(genericComponentRepositoryMocked.Object, optionsMocked.Object, _loggerMocked, mapComponentsClientMocked.Object);
+
+            var result = await genericComponentService.SaveGenericNoiseComponents();
+
+            Assert.False(result.newComponentsInserted);
+            Assert.True(result.unusedComponentsDeleted);
+        }
     }
 }

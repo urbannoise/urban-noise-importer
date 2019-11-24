@@ -24,6 +24,15 @@ steps:
     projects: '*.sln'
     arguments: '--configuration $(BuildConfiguration)'
 
+- task: VSTest@2
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*test*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+
 # SonarCloud Analysis
 - task: SonarCloudAnalyze@1
 

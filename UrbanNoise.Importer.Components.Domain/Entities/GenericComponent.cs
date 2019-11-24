@@ -1,6 +1,5 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System;
 using UrbanNoise.Importer.Components.Domain.ValueObjects;
 
 namespace UrbanNoise.Importer.Components.Domain.Entities

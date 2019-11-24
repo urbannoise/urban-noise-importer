@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UrbanNoise.Importer.Components.Domain.ValueObjects
+﻿namespace UrbanNoise.Importer.Components.Domain.ValueObjects
 {
     public class Coordinates
     {

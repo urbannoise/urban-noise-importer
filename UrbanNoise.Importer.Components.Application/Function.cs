@@ -18,10 +18,10 @@ namespace UrbanNoise.Importer.Components.Application
         [FunctionName("Function")]
         public async Task Run([TimerTrigger("* * * * *")]TimerInfo myTimer, ILogger log) 
         {
-            var result = await _genericComponentsImportService.SaveGenericNoiseComponents();
+            var (newComponentsInserted, unusedComponentsDeleted) = await _genericComponentsImportService.SaveGenericNoiseComponents();
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}.");
-            log.LogInformation($"New components inserted: ${result.newComponentsInserted}");
-            log.LogInformation($"Unused components deleted: ${result.unusedComponentsDeleted}");
+            log.LogInformation($"New components inserted: ${newComponentsInserted}");
+            log.LogInformation($"Unused components deleted: ${unusedComponentsDeleted}");
         }
     }
 }

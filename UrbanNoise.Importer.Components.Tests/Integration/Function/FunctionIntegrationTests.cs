@@ -1,19 +1,16 @@
-﻿using Microsoft.Extensions.Logging;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Moq;
 using System.Threading.Tasks;
-using UrbanNoise.Importer.Components.Business.Implementations;
 using UrbanNoise.Importer.Components.Business.Interfaces;
 using UrbanNoise.Importer.Components.Tests.Integration.Utils;
 using Xunit;
 
 namespace UrbanNoise.Importer.Components.Tests.Integration.Function
 {
+    [Collection("FunctionIntegrationTests")]
     public class FunctionIntegrationTests
     {
         [Fact]
+        [Trait("Integration Test", "Function Timer")]
         public async Task Timer_should_log_message()
         {
             var genericComponentsImportService = new Mock<IGenericComponentsImportService>();

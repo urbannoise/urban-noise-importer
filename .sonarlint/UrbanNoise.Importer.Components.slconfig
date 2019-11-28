@@ -1,0 +1,15 @@
+{
+  "ServerUri": "https://sonarcloud.io/",
+  "Organization": {
+    "Key": "urbannoise",
+    "Name": "urbannoise"
+  },
+  "ProjectKey": "urbannoise_urban-noise-importer-components",
+  "ProjectName": "urban-noise-importer-components",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "AW6JN1QR22eZkRU1UaWu",
+      "ProfileTimestamp": "2019-10-29T09:27:27+01:00"
+    }
+  }
+}

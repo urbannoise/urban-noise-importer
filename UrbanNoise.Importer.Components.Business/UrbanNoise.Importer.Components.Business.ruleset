@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="SonarQube - urban-noise-importer-components Sonar way" ToolsVersion="16.0">
+  <Include Path="..\.sonarlint\urbannoise_urban-noise-importer-componentscsharp.ruleset" Action="Default" />
+</RuleSet>

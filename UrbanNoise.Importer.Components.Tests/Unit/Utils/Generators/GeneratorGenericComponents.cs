@@ -10,7 +10,7 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Utils.Generators
     {
         public static IEnumerable<GenericComponent> GenerateGenericComponents()
         {
-            return new List<GenericComponent>
+            var components =  new List<GenericComponent>
             {
                 new GenericComponent
                 {
@@ -33,7 +33,7 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Utils.Generators
                     }
                 }
             };
-
+            return components;
         }
 
         public static Task<IEnumerable<GenericComponent>> GenerateGenericComponentsAsync()

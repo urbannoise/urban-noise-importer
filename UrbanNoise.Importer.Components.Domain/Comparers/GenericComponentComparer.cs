@@ -12,7 +12,7 @@ namespace UrbanNoise.Importer.Components.Domain.Comparers
             if (Object.ReferenceEquals(x, y)) return true;
 
             //Check whether any of the compared objects is null.
-            if (Object.ReferenceEquals(x, null) || Object.ReferenceEquals(y, null))
+            if (x is null || y is null)
                 return false;
 
             //Check the id is already stored in the database (coordinates are changing constantly so it is better to avoid it for now)

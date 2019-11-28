@@ -1,13 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using UrbanNoise.Importer.Components.Business.Implementations;
-using UrbanNoise.Importer.Components.Business.Interfaces;
 using UrbanNoise.Importer.Components.Domain.Entities;
 using UrbanNoise.Importer.Components.Domain.Repositories;
 using UrbanNoise.Importer.Components.Infrastructure.Clients;
@@ -22,7 +19,6 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Services
     [Collection("GenericComponentsImportService Unit Tests")]
     public class GenericComponentServiceUnitTests
     {
-        private readonly IGenericComponentsImportService _genericComponentService;
         private readonly IGenericComponentRepository _genericComponentRepositoryMocked;
         private readonly IOptions<AppSettings> _optionsMocked;
         private readonly ILogger _loggerMocked;
@@ -34,13 +30,11 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Services
             _loggerMocked = Mock.Of<ILogger>();
             _mapComponentsClientMocked = Mock.Of<IMapComponentsClient>();
 
-            _genericComponentRepositoryMocked = Mock.Of<IGenericComponentRepository>();
-
-            _genericComponentService = new GenericComponentsImportService(_genericComponentRepositoryMocked, _optionsMocked, _loggerMocked, _mapComponentsClientMocked);
+            _genericComponentRepositoryMocked = Mock.Of<IGenericComponentRepository>();          
         }
 
         [Fact]
-        [Trait("Category", "ImportGenericComponents")]
+        [Trait("Unit Test", "ImportGenericComponents")]
         public async Task ImportGenericComponents_ShouldReturnGenericComponents()
         {
             var mapComponentsClientMocked = new Mock<IMapComponentsClient>();
@@ -60,7 +54,7 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Services
         }
 
         [Fact]
-        [Trait("Category", "ImportGenericComponents")]
+        [Trait("Unit Test", "ImportGenericComponents")]
         public async Task ImportGenericComponents_Should_Not_ReturnGenericComponents()
         {
             var mapComponentsClientMocked = new Mock<IMapComponentsClient>();
@@ -79,7 +73,7 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Services
         }
 
         [Theory]
-        [Trait("Category", "GetGenericNoiseComponents")]
+        [Trait("Unit Test", "GetGenericNoiseComponents")]
         [MemberData(nameof(MapComponentsDtoParameter))]
         public void GetGenericNoiseComponents_ShouldReturnNoiseComponents(MapComponentsDto mapComponentsDto)
         {
@@ -101,7 +95,7 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Services
             };
 
         [Theory]
-        [Trait("Category", "GetGenericNoiseComponents")]
+        [Trait("Unit Test", "GetGenericNoiseComponents")]
         [MemberData(nameof(WrongMapComponentsDtoParameter))]
         public void GetGenericNoiseComponents_Should_Not_ReturnNoiseComponents(MapComponentsDto mapComponentsDto)
         {
@@ -122,7 +116,7 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Services
             };
 
         [Theory]
-        [Trait("Category", "GenericComponentsHaveChanged")]
+        [Trait("Unit Test", "GenericComponentsHaveChanged")]
         [MemberData(nameof(GenericComponentsParameter))]
         public async Task GenericComponentsHaveChanged_Should_Not_ReturnComponentsToInsertOrToDelete(IEnumerable<GenericComponent> genericComponents)
         {
@@ -132,14 +126,14 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Services
 
             var genericComponentService = new GenericComponentsImportService(genericComponentRepositoryMocked.Object, _optionsMocked, _loggerMocked, _mapComponentsClientMocked);
 
-            var result = await genericComponentService.GenericComponentsHaveChanged(genericComponents);
+            var (componentsToInsert, componentsToDelete) = await genericComponentService.GenericComponentsHaveChanged(genericComponents);
 
-            Assert.Empty(result.componentsToInsert);
-            Assert.Empty(result.componentsToDelete);
+            Assert.Empty(componentsToInsert);
+            Assert.Empty(componentsToDelete);
         }
 
         [Theory]
-        [Trait("Category", "GenericComponentsHaveChanged")]
+        [Trait("Unit Test", "GenericComponentsHaveChanged")]
         [MemberData(nameof(GenericComponentsParameter))]
         public async Task GenericComponentsHaveChanged_ShouldReturnComponentsToInsert(IEnumerable<GenericComponent> genericComponents)
         {
@@ -150,14 +144,14 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Services
 
             var genericComponentService = new GenericComponentsImportService(genericComponentRepositoryMocked.Object, _optionsMocked, _loggerMocked, _mapComponentsClientMocked);
 
-            var result = await genericComponentService.GenericComponentsHaveChanged(genericComponents);
+            var (componentsToInsert, componentsToDelete) = await genericComponentService.GenericComponentsHaveChanged(genericComponents);
 
-            Assert.NotEmpty(result.componentsToInsert);
-            Assert.Empty(result.componentsToDelete);
+            Assert.NotEmpty(componentsToInsert);
+            Assert.Empty(componentsToDelete);
         }
 
         [Theory]
-        [Trait("Category", "GenericComponentsHaveChanged")]
+        [Trait("Unit Test", "GenericComponentsHaveChanged")]
         [MemberData(nameof(GenericComponentsParameter))]
         public async Task GenericComponentsHaveChanged_ShouldReturnComponentsToDelete(IEnumerable<GenericComponent> genericComponents)
         {
@@ -168,10 +162,10 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Services
 
             var genericComponentService = new GenericComponentsImportService(genericComponentRepositoryMocked.Object, _optionsMocked, _loggerMocked, _mapComponentsClientMocked);
 
-            var result = await genericComponentService.GenericComponentsHaveChanged(genericComponents);
+            var (componentsToInsert, componentsToDelete) = await genericComponentService.GenericComponentsHaveChanged(genericComponents);
 
-            Assert.Empty(result.componentsToInsert);
-            Assert.NotEmpty(result.componentsToDelete);
+            Assert.Empty(componentsToInsert);
+            Assert.NotEmpty(componentsToDelete);
         }
 
         public static IEnumerable<object[]> GenericComponentsParameter =>
@@ -181,7 +175,7 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Services
             };
 
         [Fact]
-        [Trait("Category", "SaveGenericNoiseComponents")]
+        [Trait("Unit Test", "SaveGenericNoiseComponents")]
         public async Task SaveGenericNoiseComponents_ShouldInsertNewComponents()
         {
             var mapComponentsDto = GeneratorMapComponentsDto.GenerateMapComponentsDtoAsync().Result;
@@ -200,14 +194,14 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Services
 
             var genericComponentService = new GenericComponentsImportService(genericComponentRepositoryMocked.Object, optionsMocked.Object, _loggerMocked, mapComponentsClientMocked.Object);
 
-            var result = await genericComponentService.SaveGenericNoiseComponents();
+            var (newComponentsInserted, unusedComponentsDeleted) = await genericComponentService.SaveGenericNoiseComponents();
 
-            Assert.True(result.newComponentsInserted);
-            Assert.False(result.unusedComponentsDeleted);
+            Assert.True(newComponentsInserted);
+            Assert.False(unusedComponentsDeleted);
         }
 
         [Fact]
-        [Trait("Category", "SaveGenericNoiseComponents")]
+        [Trait("Unit Test", "SaveGenericNoiseComponents")]
         public async Task SaveGenericNoiseComponents_ShouldDeleteUnusedComponents()
         {
             var mapComponentsDto = GeneratorMapComponentsDto.GenerateMapComponentsDtoAsync().Result;
@@ -226,10 +220,10 @@ namespace UrbanNoise.Importer.Components.Tests.Unit.Services
 
             var genericComponentService = new GenericComponentsImportService(genericComponentRepositoryMocked.Object, optionsMocked.Object, _loggerMocked, mapComponentsClientMocked.Object);
 
-            var result = await genericComponentService.SaveGenericNoiseComponents();
+            var (newComponentsInserted, unusedComponentsDeleted) = await genericComponentService.SaveGenericNoiseComponents();
 
-            Assert.False(result.newComponentsInserted);
-            Assert.True(result.unusedComponentsDeleted);
+            Assert.False(newComponentsInserted);
+            Assert.True(unusedComponentsDeleted);
         }
     }
 }
